@@ -1,4 +1,4 @@
-<% project_name = 'Project2APITemplate' %>
+<% project_name = 'ProjectTwoApi' %>
 
 default: &default
   adapter: postgresql
