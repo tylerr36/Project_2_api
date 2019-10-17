@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-class ExamplesController < OpenReadController
+class ExamplesController < ProtectedController
+# class ExamplesController < ProtectedController
   before_action :set_example, only: %i[update destroy]
 
   # GET /examples
   # GET /examples.json
   def index
+    #get example just for current user
+    # @examples = current_user.example
+    #returns all examples in database
     @examples = Example.all
 
     render json: @examples
@@ -14,12 +18,15 @@ class ExamplesController < OpenReadController
   # GET /examples/1
   # GET /examples/1.json
   def show
-    render json: Example.find(params[:id])
+    render json: current_user.examples.find(params[:id])
   end
 
   # POST /examples
   # POST /examples.json
   def create
+    #Creates a new example with new example params.
+    #Ex:
+    # @book = author.books.build(book_params)
     @example = current_user.examples.build(example_params)
 
     if @example.save
