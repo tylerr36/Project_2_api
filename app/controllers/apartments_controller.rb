@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
-class ApartmentsController < ApplicationController
+class ApartmentsController < ProtectedController
+  #change "application to "protected" when setting up for real
   before_action :set_apartment, only: %i[show update destroy]
 
   # GET /apartments
   def index
-    @apartments = Apartment.all
+    @apartments = current_user.apartments
 
     render json: @apartments
   end
 
   # GET /apartments/1
   def show
+    # render json: Apartment.find(params[:id])
     render json: @apartment
   end
 
   # POST /apartments
   def create
-    @apartment = Apartment.new(apartment_params)
+    @apartment = current_user.apartments.build(apartment_params)
 
     if @apartment.save
       render json: @apartment, status: :created, location: @apartment
@@ -44,7 +46,7 @@ class ApartmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_apartment
-    @apartment = Apartment.find(params[:id])
+    @apartment = current_user.apartments.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
