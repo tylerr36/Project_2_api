@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
 
-  resources :cars
+  resources :cars, except: %i[new edit]
   resources :apartments, except: %i[new edit]
   # RESTful routes
   resources :examples, except: %i[new edit]
